@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <script>
+    // Variável global para armazenar as informações adicionadas
+    var informacoes = [];
+
+    function abrirMenu() {
+      document.getElementById("menu").style.height = "20rem";
+      document.addEventListener("click", fecharMenuForaDoMenu);
+    }
+
+    function fecharMenu() {
+      document.getElementById("menu").style.height = "2rem";
+      document.removeEventListener("click", fecharMenuForaDoMenu);
+    }
+
+    function fecharMenuForaDoMenu(event) {
+      var menu = document.getElementById("menu");
+      // Verifique se o clique ocorreu fora do menu
+      if (event.target != menu && !menu.contains(event.target)) {
+        fecharMenu();
+      }
+    }
+
+    function abrirModal(modalId) {
+      var modal = document.getElementById(modalId);
+      modal.style.display = "block";
+    }
+
+    function fecharModal(modalId) {
+      var modal = document.getElementById(modalId);
+      modal.style.display = "none";
+    }
+
+    function adicionarInformacao() {
+      var titulo = document.getElementById("titulo").value;
+      var data = document.getElementById("data").value;
+      var texto = document.getElementById("texto").value;
+
+      // Verificar se todos os campos estão preenchidos
+      if (titulo && data && texto) {
+        // Criar um novo elemento de post
+        var post = document.createElement("div");
+        post.className = "post";
+        post.setAttribute("data-titulo", titulo);
+        post.setAttribute("data-data", data);
+
+        var tituloElement = document.createElement("subtitle");
+        tituloElement.className = "titlePost";
+        tituloElement.innerText = titulo;
+
+        var dataElement = document.createElement("text");
+        dataElement.className = "dataPost";
+        dataElement.innerText = data;
+
+        var textoElement = document.createElement("text");
+        textoElement.innerText = texto;
+
+        // Criar um elemento de ícone de lixeira
+        var lixeiraIcon = document.createElement("img");
+        lixeiraIcon.src = "../assets/icons/bin-svgrepo-com.svg";
+        lixeiraIcon.className = "removePostIcon";
+        lixeiraIcon.alt = "Remover";
+
+
+        lixeiraIcon.addEventListener("click", function () {
+          // Remover o elemento post quando o ícone de lixeira for clicado
+          post.remove();
+        });
+
+        // Adicionar elementos ao post
+        post.appendChild(tituloElement);
+        post.appendChild(dataElement);
+        post.appendChild(textoElement);
+        post.appendChild(lixeiraIcon); // Adicionar o ícone de lixeira ao post
+
+        // Adicionar o novo post à página
+        var body = document.querySelector(".body");
+        body.appendChild(post);
+
+        // Limpar os campos de entrada
+        document.getElementById("titulo").value = "";
+        document.getElementById("data").value = "";
+        document.getElementById("texto").value = "";
+
+        // Fechar o modal
+        fecharModal("modal-add");
+      }
+    }
+
+    function pesquisarInformacoes() {
+      var termoPesquisa = document.getElementById("termo-pesquisa").value.toLowerCase();
+      var posts = document.querySelectorAll(".post");
+
+      posts.forEach(function (post) {
+        var titulo = post.getAttribute("data-titulo").toLowerCase();
+        var data = post.getAttribute("data-data").toLowerCase();
+
+        if (titulo.includes(termoPesquisa) || data.includes(termoPesquisa)) {
+          post.classList.remove("hidden");
+          post.classList.add("visible");
+        } else {
+          post.classList.remove("visible");
+          post.classList.add("hidden");
+        }
+      });
+    }
+    function removerPost() {
+      var lixeiraIcons = document.querySelectorAll(".removePostIcon");
+      lixeiraIcons.forEach(function (lixeiraIcon) {
+        lixeiraIcon.style.display = "inline";
+        lixeiraIcon.style.cursor = "pointer";
+      });
+    }
+
+  </script>
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="../style/Home.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="menu-options">
+      <a href="javascript:void(0)" onclick="removerPost()">Remover</a>
+      <a href="javascript:void(0)" onclick="abrirModal('modal-add')">Adicionar</a>
+      <a href="javascript:void(0)" onclick="abrirModal('modal-search')">Pesquisar</a>
+    </div>
+
+    <a class="menu" id="menu" href="javascript:void(0)" onclick="abrirMenu()">
+      <img src="../assets/icons/menu-svgrepo-com.svg" alt="logo" class="logo"> Menu
+    </a>
+
+    <h1 class="title">Some Webpage</h1>
+    <div class="socialMenu">
+      <a href="https://www.facebook.com/bernardo.seabra.756/" class="menuSocialIcons">
+        <img src="../assets/icons/facebook-svgrepo-com (2).svg" alt="logo" class="logo">
+      </a>
+      <a href="" class="menuSocialIcons">
+        <img src="../assets/icons/twitter.svg" alt="logo" class="logo">
+      </a>
+      <a href="" class="menuSocialIcons">
+        <img src="../assets/icons/instagram-svgrepo-com.svg" alt="logo" class="menuSocialIcons">
+      </a>
+      <a href="" class="menuSocialIcons">
+        <img src="../assets/icons/github-142-svgrepo-com.svg" alt="logo" class="logo">
+      </a>
+      <a href="" class="menuSocialIcons">
+        <img src="../assets/icons/linkedin-161-svgrepo-com.svg" alt="logo" class="logo">
+      </a>
+    </div>
+  </header>
+
+  <div class="body">
+    <!-- Conteúdo de posts aqui -->
+  </div>
+
+  <div class="containerModal" id="modal">
+    <div id="modal-add" class="modal" style="display: none;">
+      <h2>Adicionar Informação</h2>
+      <form>
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="title" required>
+        <br>
+
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required><br>
+
+        <label for="texto">Texto:</label>
+        <input type="text" id="texto" name="text" required><br>
+
+        <button onclick="adicionarInformacao()">Adicionar</button>
+        <a href="javascript:void(0)" onclick="fecharModal('modal-add')">Fechar</a>
+      </form>
+    </div>
+  </div>
+
+  <div class="containerModal" id="modal">
+    <div id="modal-search" class="modal" style="display: none;">
+      <h2>Pesquisar Informações</h2>
+      <label for="termo-pesquisa">Título ou Data:</label>
+      <input type="text" id="termo-pesquisa">
+      <button onclick="pesquisarInformacoes()">Pesquisar</button>
+      <a href="javascript:void(0)" onclick="fecharModal('modal-search')">Fechar</a>
+    </div>
+  </div>
+
+</body>
+
+</html>
