@@ -7,11 +7,12 @@
 }
 .header {
   width: 100%;
-  height: 170px;
+  height: 16rem;
   background-color: #dcdcdc;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 2rem;
 }
 .body {
   display: flex;
@@ -23,6 +24,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
+  margin-top: 6rem;
 }
 .menu {
   display: flex;
@@ -42,14 +44,7 @@
 .menuSocialIcons {
   margin: 0 0.5rem;
 }
-.post {
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid #dcdcdc;
-  height: 10rem;
-  width: 41rem;
-  justify-content: center;
-}
+
 .titlePost {
   font-size: 1.5rem;
   font-weight: 600;
@@ -66,54 +61,56 @@
   cursor: pointer;
 }
 
-#menu {
-  display: flex;
-  overflow: hidden;
-  transition: 0.5s;
-  position: fixed;
-  flex-direction: row;
-  color: black;
-  border: 1px solid black;
-}
-
-/* Estilo para o link de fechar o menu */
-.closebtn {
-  text-decoration: none;
-  color: black;
-  font-size: 2rem;
-  width: 1rem;
-}
-
-/* Estilo para o link de abrir o menu */
-.menu {
-  cursor: pointer;
-  color: #fff;
-  text-decoration: none;
-  display: block;
-}
-
-/* Estilo para o conteúdo dentro do menu */
-.menu a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 20px;
-  display: block;
-}
-
-.menu a:hover {
-  background-color: #444;
-}
-
 .modal {
-  display: flex;
-  align-items: center;
-  width: 30rem;
-  height: 15rem;
-  background-color: #c8c4c4;
-  border-radius: 5px;
-  justify-content: center;
+  width: 21rem;
+  background-color: #b6bfbf;
+  border-radius: 0.5rem;
+  padding: 1rem;
 }
 .containerModal {
   display: flex;
   justify-content: center;
+}
+
+.post {
+  border-bottom: 1px solid #dcdcdc;
+  height: 10rem;
+  width: 23rem;
+  margin: 10px;
+  max-width: 23rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.submenu {
+  display: none;
+}
+
+.menu-item:hover .submenu {
+  display: block;
+}
+.menu-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-options {
+  border: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  width: 13rem;
+  margin-left: 1rem;
+}
+
+.menu-config {
+  display: flex;
+  align-items: center;
+  margin-right: 2rem;
+}
+
+.menu-title {
+  text-decoration: none;
+  color: black;
 }
